@@ -1,0 +1,17 @@
+package com.joseph.poll_monolithic_app.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class QuestionAnswerResDto {
+
+    private Long Id;
+
+    private Long questionId;
+
+    private String answer;
+}

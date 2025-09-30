@@ -17,7 +17,11 @@ public class PollSubmissionDto {
 
     private Long pollId;
 
-    private List<QuestionAnswerDto> answers = new ArrayList<>();
+    private List<QuestionAnswerReqDto> answers = new ArrayList<>();
+
+    private String responserName;
+
+    private String responderUsername;
 
     private Instant submittedAt;
 }

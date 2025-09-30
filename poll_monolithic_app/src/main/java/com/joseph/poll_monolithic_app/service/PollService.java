@@ -16,6 +16,7 @@ public class PollService {
     public PollResponseDto createPoll(PollRequestDto pollDto) {
         Poll poll = mapToEntity(pollDto);
         // will have to do a check here that current user is set before saving to db
+        // i.e. making sure poll.setCreator and poll.setTenant isn't null
         Poll savedPoll = pollRepository.save(poll);
 
         return mapToDto(savedPoll);
@@ -36,7 +37,7 @@ public class PollService {
         pollDto.setTitle(poll.getTitle());
         pollDto.setDescription(poll.getDescription());
         pollDto.setCreatorName(poll.getCreator().getFullName());
-        pollDto.setCreatorUserName(poll.getCreator().getUserName());
+        pollDto.setCreatorUsername(poll.getCreator().getUsername());
         pollDto.setTenantName(poll.getTenant().getName());
         pollDto.setVisibility(poll.getVisibility());
         pollDto.setPollStatus(poll.getPollStatus());

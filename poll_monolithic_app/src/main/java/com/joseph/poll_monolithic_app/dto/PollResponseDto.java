@@ -23,7 +23,7 @@ public class PollResponseDto {
 
     private String creatorName;
 
-    private String creatorUserName;
+    private String creatorUsername;
 
     private String tenantName;
 
