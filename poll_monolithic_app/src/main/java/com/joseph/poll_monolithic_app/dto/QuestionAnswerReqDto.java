@@ -9,5 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QuestionAnswerReqDto {
 
+    private Long questionId;
+
     private String answer;
 }

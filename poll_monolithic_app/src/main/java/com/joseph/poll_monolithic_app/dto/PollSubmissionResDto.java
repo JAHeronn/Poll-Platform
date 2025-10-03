@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PollSubmissionDto {
+public class PollSubmissionResDto {
 
     private Long id;
 
@@ -19,7 +19,7 @@ public class PollSubmissionDto {
 
     private List<QuestionAnswerReqDto> answers = new ArrayList<>();
 
-    private String responserName;
+    private String responderName;
 
     private String responderUsername;
 
