@@ -17,7 +17,7 @@ public class PollSubmissionResDto {
 
     private Long pollId;
 
-    private List<QuestionAnswerReqDto> answers = new ArrayList<>();
+    private List<QuestionAnswerResDto> answers = new ArrayList<>();
 
     private String responderName;
 

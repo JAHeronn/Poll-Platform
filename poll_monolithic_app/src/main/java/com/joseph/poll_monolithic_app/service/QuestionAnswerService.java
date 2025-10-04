@@ -4,7 +4,7 @@ import com.joseph.poll_monolithic_app.dto.QuestionAnswerReqDto;
 import com.joseph.poll_monolithic_app.dto.QuestionAnswerResDto;
 import com.joseph.poll_monolithic_app.model.Question;
 import com.joseph.poll_monolithic_app.model.QuestionAnswer;
-import com.joseph.poll_monolithic_app.repository.QuestionAnswerRepository;
+import com.joseph.poll_monolithic_app.repository.QuestionAnswerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class QuestionAnswerService {
 
-    private final QuestionAnswerRepository questionAnswerRepository;
+    private final QuestionAnswerRepo questionAnswerRepository;
 
     public QuestionAnswerResDto addAnswer(QuestionAnswerReqDto answerDto, Question question) {
         QuestionAnswer answer = mapToEntity(answerDto, question);
