@@ -2,8 +2,13 @@ package com.joseph.poll_monolithic_app.service;
 
 import com.joseph.poll_monolithic_app.dto.PollRequestDto;
 import com.joseph.poll_monolithic_app.dto.PollResponseDto;
+import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.Poll;
+import com.joseph.poll_monolithic_app.model.Tenant;
+import com.joseph.poll_monolithic_app.model.User;
 import com.joseph.poll_monolithic_app.repository.PollRepository;
+import com.joseph.poll_monolithic_app.repository.TenantRepository;
+import com.joseph.poll_monolithic_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class PollService {
 
     private final PollRepository pollRepository;
+    private final UserRepository userRepository;
+    private final TenantRepository tenantRepository;
 
     public PollResponseDto createPoll(PollRequestDto pollDto) {
         Poll poll = mapToEntity(pollDto);
@@ -27,6 +34,15 @@ public class PollService {
         poll.setTitle(pollDto.getTitle());
         poll.setDescription(pollDto.getDescription());
         // need to set currentUser and currentTenant here but have to do authorisation for it
+
+        // temporary placeholder until auth is sorted
+        User mockUser = userRepository.findById(1L)
+                .orElseThrow(() -> new ResourceNotFoundException("Mock user not found"));
+        Tenant mockTenant = tenantRepository.findById(1L)
+                .orElseThrow(() -> new ResourceNotFoundException("Mock tenant not found"));
+
+        poll.setCreator(mockUser);
+        poll.setTenant(mockTenant);
 
         return poll;
     }

@@ -14,7 +14,7 @@ public class TenantService {
 
     public Tenant createDefaultTenant(User user) {
         Tenant tenant = new Tenant();
-        tenant.setName(user.getUserName() + "'s Space");
+        tenant.setName(user.getUsername() + "'s Space");
         tenant.setCreatedAt(user.getCreatedAt());
         return tenantRepository.save(tenant);
     }

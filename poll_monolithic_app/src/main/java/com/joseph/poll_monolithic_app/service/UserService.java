@@ -15,7 +15,7 @@ public class UserService {
 
     public User createUser(UserRequestDto userDto) {
         User user = new User();
-        user.setUserName(userDto.getUserName());
+        user.setUsername(userDto.getUserName());
         user.setFullName(userDto.getFullName());
         user.setEmail(userDto.getEmail());
 
@@ -27,7 +27,7 @@ public class UserService {
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
         userDto.setFullName(user.getFullName());
-        userDto.setUserName(user.getUserName());
+        userDto.setUserName(user.getUsername());
         userDto.setCreatedAt(user.getCreatedAt());
 
         return userDto;
