@@ -20,8 +20,13 @@ public class PollService {
     private final UserRepository userRepository;
     private final TenantRepository tenantRepository;
 
-    public PollResponseDto createPoll(PollRequestDto pollDto, User creator, Tenant tenant) {
-        Poll poll = mapToEntity(pollDto, creator, tenant);
+    public PollResponseDto createPoll(PollRequestDto pollDto) {
+        User mockUser = userRepository.findById(1L)
+            .orElseThrow(() -> new ResourceNotFoundException("Mock user not found"));
+        Tenant mockTenant = tenantRepository.findById(1L)
+            .orElseThrow(() -> new ResourceNotFoundException("Mock tenant not found"));
+
+        Poll poll = mapToEntity(pollDto, mockUser, mockTenant);
         Poll savedPoll = pollRepository.save(poll);
 
         return mapToDto(savedPoll);
