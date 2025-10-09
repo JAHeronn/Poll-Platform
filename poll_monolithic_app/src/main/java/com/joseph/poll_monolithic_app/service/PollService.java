@@ -20,29 +20,20 @@ public class PollService {
     private final UserRepository userRepository;
     private final TenantRepository tenantRepository;
 
-    public PollResponseDto createPoll(PollRequestDto pollDto) {
-        Poll poll = mapToEntity(pollDto);
-        // will have to do a check here that current user is set before saving to db
-        // i.e. making sure poll.setCreator and poll.setTenant isn't null
+    public PollResponseDto createPoll(PollRequestDto pollDto, User creator, Tenant tenant) {
+        Poll poll = mapToEntity(pollDto, creator, tenant);
         Poll savedPoll = pollRepository.save(poll);
 
         return mapToDto(savedPoll);
     }
 
-    public Poll mapToEntity(PollRequestDto pollDto) {
+    public Poll mapToEntity(PollRequestDto pollDto, User creator, Tenant tenant) {
         Poll poll = new Poll();
         poll.setTitle(pollDto.getTitle());
         poll.setDescription(pollDto.getDescription());
-        // need to set currentUser and currentTenant here but have to do authorisation for it
-
-        // temporary placeholder until auth is sorted
-        User mockUser = userRepository.findById(1L)
-                .orElseThrow(() -> new ResourceNotFoundException("Mock user not found"));
-        Tenant mockTenant = tenantRepository.findById(1L)
-                .orElseThrow(() -> new ResourceNotFoundException("Mock tenant not found"));
-
-        poll.setCreator(mockUser);
-        poll.setTenant(mockTenant);
+        // will set currentUser and currentTenant when doing auth
+        poll.setCreator(creator);
+        poll.setTenant(tenant);
 
         return poll;
     }
