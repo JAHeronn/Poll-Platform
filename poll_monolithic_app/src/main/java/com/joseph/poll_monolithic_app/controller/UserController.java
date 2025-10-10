@@ -2,6 +2,7 @@ package com.joseph.poll_monolithic_app.controller;
 
 import com.joseph.poll_monolithic_app.dto.UserRequestDto;
 import com.joseph.poll_monolithic_app.dto.UserResponseDto;
+import com.joseph.poll_monolithic_app.model.enums.Role;
 import com.joseph.poll_monolithic_app.service.UserRegistrationService;
 import com.joseph.poll_monolithic_app.service.UserService;
 import jakarta.validation.Valid;

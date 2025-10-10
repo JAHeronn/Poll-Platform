@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class PollSubmissionController {
     private final PollSubmissionService pollSubmissionService;
 
     @PostMapping
-    public ResponseEntity<PollSubmissionResDto> submitPoll(PollSubmissionReqDto reqDto, Poll poll, User responder) {
+    public ResponseEntity<PollSubmissionResDto> submitPoll(@RequestBody PollSubmissionReqDto reqDto, Poll poll, User responder) {
         PollSubmissionResDto submittedPoll = pollSubmissionService.submitPoll(reqDto, poll, responder);
         return ResponseEntity.status(HttpStatus.CREATED).body(submittedPoll);
     }

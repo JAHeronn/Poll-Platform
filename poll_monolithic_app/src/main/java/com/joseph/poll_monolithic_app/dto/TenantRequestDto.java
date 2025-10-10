@@ -5,17 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
-
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class TenantDto {
-
-    private Long id;
-
+public class TenantRequestDto {
     @NotBlank(message = "Tenant name is required")
     private String name;
-
-    private Instant createdAt;
 }

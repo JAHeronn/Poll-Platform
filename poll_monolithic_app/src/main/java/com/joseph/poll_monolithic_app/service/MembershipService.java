@@ -14,11 +14,11 @@ public class MembershipService {
 
     private final UserTenantRepo userTenantRepository;
 
-    public UserTenant assignUser(User user, Tenant tenant) {
+    public UserTenant assignUserToTenant(User user, Tenant tenant, Role role) {
         UserTenant membership = new UserTenant();
         membership.setUser(user);
         membership.setTenant(tenant);
-        membership.setRole(Role.ADMIN);
+        membership.setRole(role);
 
         return userTenantRepository.save(membership);
     }
