@@ -18,5 +18,5 @@ public class QuestionRequestDto {
 
     private QuestionType type;
 
-    private List<QuestionOptionDto> options = new ArrayList<>();
+    private List<QuestionOptionResDto> options = new ArrayList<>();
 }

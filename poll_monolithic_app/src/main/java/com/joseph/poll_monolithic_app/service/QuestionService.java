@@ -1,6 +1,6 @@
 package com.joseph.poll_monolithic_app.service;
 
-import com.joseph.poll_monolithic_app.dto.QuestionOptionDto;
+import com.joseph.poll_monolithic_app.dto.QuestionOptionResDto;
 import com.joseph.poll_monolithic_app.dto.QuestionRequestDto;
 import com.joseph.poll_monolithic_app.dto.QuestionResponseDto;
 import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
@@ -12,7 +12,6 @@ import com.joseph.poll_monolithic_app.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -62,10 +61,10 @@ public class QuestionService {
         questionDto.setQuestionText(question.getQuestionText());
         questionDto.setType(question.getType());
 
-        List<QuestionOptionDto> optionDtos = question.getOptions()
+        List<QuestionOptionResDto> optionDtos = question.getOptions()
                 .stream()
                 .map(option -> {
-                    QuestionOptionDto optionDto = new QuestionOptionDto();
+                    QuestionOptionResDto optionDto = new QuestionOptionResDto();
                     optionDto.setId(option.getId());
                     optionDto.setOptionText(option.getOptionText());
                     return optionDto;
