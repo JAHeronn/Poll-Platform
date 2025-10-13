@@ -7,6 +7,7 @@ import com.joseph.poll_monolithic_app.model.QuestionAnswer;
 import com.joseph.poll_monolithic_app.repository.QuestionAnswerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +15,7 @@ public class QuestionAnswerService {
 
     private final QuestionAnswerRepo questionAnswerRepository;
 
+    @Transactional
     public QuestionAnswerResDto addAnswer(QuestionAnswerReqDto answerDto, Question question) {
         QuestionAnswer answer = mapToEntity(answerDto, question);
         QuestionAnswer savedAnswer = questionAnswerRepository.save(answer);
