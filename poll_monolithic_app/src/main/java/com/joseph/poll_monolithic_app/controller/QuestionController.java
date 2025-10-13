@@ -8,6 +8,7 @@ import com.joseph.poll_monolithic_app.dto.QuestionResponseDto;
 import com.joseph.poll_monolithic_app.service.QuestionOptionService;
 import com.joseph.poll_monolithic_app.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class QuestionController {
     }
 
     @PostMapping("/{questionId}/options")
-    public ResponseEntity<QuestionOptionResDto> addOption(@PathVariable Long pollId, @PathVariable Long questionId, @RequestBody QuestionOptionReqDto optionReqDto) {
+    public ResponseEntity<QuestionOptionResDto> addOption(@PathVariable Long pollId, @PathVariable Long questionId, @RequestBody QuestionOptionReqDto optionReqDto) throws BadRequestException {
         QuestionOptionResDto createdOption = questionOptionService.addOption(pollId, questionId, optionReqDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOption);
     }

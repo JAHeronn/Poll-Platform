@@ -8,6 +8,7 @@ import com.joseph.poll_monolithic_app.model.QuestionOption;
 import com.joseph.poll_monolithic_app.repository.QuestionOptionRepo;
 import com.joseph.poll_monolithic_app.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +18,13 @@ public class QuestionOptionService {
     private final QuestionOptionRepo questionOptionRepository;
     private final QuestionRepository questionRepository;
 
-    public QuestionOptionResDto addOption(Long pollId, Long questionId, QuestionOptionReqDto optionDto) {
+    public QuestionOptionResDto addOption(Long pollId, Long questionId, QuestionOptionReqDto optionDto) throws BadRequestException {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
+
+        if (!question.getPoll().getId().equals(pollId)) {
+            throw new BadRequestException("Question does not belong to the specified poll");
+        }
 
         QuestionOption option = new QuestionOption();
         option.setOptionText(optionDto.getOptionText());
