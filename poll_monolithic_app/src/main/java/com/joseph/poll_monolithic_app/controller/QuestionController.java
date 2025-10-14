@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/polls/{pollId}/questions")
 @RequiredArgsConstructor
@@ -31,5 +33,10 @@ public class QuestionController {
     public ResponseEntity<QuestionOptionResDto> addOption(@PathVariable Long pollId, @PathVariable Long questionId, @RequestBody QuestionOptionReqDto optionReqDto) throws BadRequestException {
         QuestionOptionResDto createdOption = questionOptionService.addOption(pollId, questionId, optionReqDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOption);
+    }
+
+    @GetMapping("/{questionId}")
+    public List<QuestionResponseDto> getQuestion(@PathVariable Long pollId, @PathVariable Long questionId) {
+        return questionService.getQuestion(pollId, questionId);
     }
 }

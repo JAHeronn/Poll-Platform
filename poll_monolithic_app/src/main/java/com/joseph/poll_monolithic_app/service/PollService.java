@@ -12,6 +12,8 @@ import com.joseph.poll_monolithic_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PollService {
@@ -58,4 +60,15 @@ public class PollService {
         return pollDto;
     }
 
+    public List<PollResponseDto> getAllPolls() {
+        return pollRepository.findAll().stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    public List<PollResponseDto> getPoll(Long id) {
+        return pollRepository.findById(id).stream()
+                .map(this::mapToDto)
+                .toList();
+    }
 }

@@ -77,4 +77,12 @@ public class QuestionService {
 
     }
 
+    public List<QuestionResponseDto> getQuestion(Long pollId, Long questionId) {
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+
+        return questionRepository.findById(questionId).stream()
+                .map(this::mapToDto)
+                .toList();
+    }
 }

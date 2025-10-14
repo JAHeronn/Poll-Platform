@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/polls")
@@ -21,6 +23,16 @@ public class PollController {
     public ResponseEntity<PollResponseDto> createPoll(@RequestBody PollRequestDto pollRequestDto) {
         PollResponseDto createdPoll = pollService.createPoll(pollRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPoll);
+    }
+
+    @GetMapping
+    public List<PollResponseDto> getAllPolls() {
+        return pollService.getAllPolls();
+    }
+
+    @GetMapping("/{id}")
+    public List<PollResponseDto> getPoll(@PathVariable Long id) {
+        return pollService.getPoll(id);
     }
 
 }
