@@ -36,7 +36,8 @@ public class QuestionController {
     }
 
     @GetMapping("/{questionId}")
-    public List<QuestionResponseDto> getQuestion(@PathVariable Long pollId, @PathVariable Long questionId) {
-        return questionService.getQuestion(pollId, questionId);
+    public ResponseEntity<QuestionResponseDto> getQuestion(@PathVariable Long pollId, @PathVariable Long questionId) throws BadRequestException {
+        QuestionResponseDto question = questionService.getQuestion(pollId, questionId);
+        return ResponseEntity.ok(question);
     }
 }

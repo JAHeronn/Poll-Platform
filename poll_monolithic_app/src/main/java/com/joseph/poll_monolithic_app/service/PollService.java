@@ -10,6 +10,7 @@ import com.joseph.poll_monolithic_app.repository.PollRepository;
 import com.joseph.poll_monolithic_app.repository.TenantRepository;
 import com.joseph.poll_monolithic_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,9 +67,10 @@ public class PollService {
                 .toList();
     }
 
-    public List<PollResponseDto> getPoll(Long id) {
-        return pollRepository.findById(id).stream()
-                .map(this::mapToDto)
-                .toList();
+    public PollResponseDto getPoll(Long id) {
+        Poll poll = pollRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+
+        return mapToDto(poll);
     }
 }

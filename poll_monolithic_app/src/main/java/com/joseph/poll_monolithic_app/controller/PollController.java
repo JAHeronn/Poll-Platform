@@ -31,8 +31,9 @@ public class PollController {
     }
 
     @GetMapping("/{id}")
-    public List<PollResponseDto> getPoll(@PathVariable Long id) {
-        return pollService.getPoll(id);
+    public ResponseEntity<PollResponseDto> getPoll(@PathVariable Long id) {
+        PollResponseDto poll = pollService.getPoll(id);
+        return ResponseEntity.ok(poll);
     }
 
 }

@@ -10,6 +10,7 @@ import com.joseph.poll_monolithic_app.model.QuestionOption;
 import com.joseph.poll_monolithic_app.repository.PollRepository;
 import com.joseph.poll_monolithic_app.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,12 +78,14 @@ public class QuestionService {
 
     }
 
-    public List<QuestionResponseDto> getQuestion(Long pollId, Long questionId) {
-        Poll poll = pollRepository.findById(pollId)
-                .orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+    public QuestionResponseDto getQuestion(Long pollId, Long questionId) throws BadRequestException {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
 
-        return questionRepository.findById(questionId).stream()
-                .map(this::mapToDto)
-                .toList();
+        if (!question.getPoll().getId().equals(pollId)) {
+            throw new BadRequestException("Question does not belong to this poll");
+        }
+
+        return mapToDto(question);
     }
 }
