@@ -5,6 +5,7 @@ import com.joseph.poll_monolithic_app.dto.PollSubmissionResDto;
 import com.joseph.poll_monolithic_app.dto.QuestionAnswerResDto;
 import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.*;
+import com.joseph.poll_monolithic_app.repository.PollRepository;
 import com.joseph.poll_monolithic_app.repository.PollSubmissionRepo;
 import com.joseph.poll_monolithic_app.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,13 @@ public class PollSubmissionService {
 
     private final PollSubmissionRepo pollSubmissionRepository;
     private final QuestionRepository questionRepository;
+    private final PollRepository pollRepository;
 
     @Transactional
-    public PollSubmissionResDto submitPoll(PollSubmissionReqDto submissionReqDto, Poll poll, User responder) {
+    public PollSubmissionResDto submitPoll(PollSubmissionReqDto submissionReqDto, Long pollId, User responder) {
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+
         PollSubmission pollSubmission = mapToEntity(submissionReqDto, poll, responder);
         PollSubmission savedPollSubmission = pollSubmissionRepository.save(pollSubmission);
 
