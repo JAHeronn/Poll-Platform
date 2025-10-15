@@ -62,7 +62,11 @@ public class PollService {
     }
 
     public List<PollResponseDto> getAllPolls() {
-        return pollRepository.findAll().stream()
+        // temporary placeholder until currentTenant in auth is set
+        Tenant mockTenant = tenantRepository.findById(1L)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
+
+        return pollRepository.findByTenant(mockTenant).stream()
                 .map(this::mapToDto)
                 .toList();
     }
