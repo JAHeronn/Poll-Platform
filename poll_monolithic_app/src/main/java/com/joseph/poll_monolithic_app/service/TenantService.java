@@ -2,9 +2,9 @@ package com.joseph.poll_monolithic_app.service;
 
 import com.joseph.poll_monolithic_app.dto.TenantRequestDto;
 import com.joseph.poll_monolithic_app.dto.TenantResponseDto;
+import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.Tenant;
 import com.joseph.poll_monolithic_app.model.User;
-import com.joseph.poll_monolithic_app.model.UserTenant;
 import com.joseph.poll_monolithic_app.model.enums.Role;
 import com.joseph.poll_monolithic_app.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +47,11 @@ public class TenantService {
         tenantDto.setId(tenant.getId());
         tenantDto.setCreatedAt(tenant.getCreatedAt());
         return tenantDto;
+    }
+
+    // method for testing
+    public Tenant getMockTenant() {
+        return tenantRepository.findById(1L)
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
     }
 }

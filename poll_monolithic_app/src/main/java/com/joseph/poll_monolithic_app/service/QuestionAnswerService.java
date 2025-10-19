@@ -22,7 +22,6 @@ public class QuestionAnswerService {
     private final QuestionAnswerRepo questionAnswerRepository;
     private final QuestionRepository questionRepository;
     private final PollSubmissionRepo pollSubmissionRepo;
-    private final PollRepository pollRepository;
 
     @Transactional
     public QuestionAnswerResDto addAnswer(Long pollId, Long submissionId, QuestionAnswerReqDto answerDto) throws BadRequestException {
