@@ -48,10 +48,4 @@ public class TenantService {
         tenantDto.setCreatedAt(tenant.getCreatedAt());
         return tenantDto;
     }
-
-    // method for testing
-    public Tenant getMockTenant() {
-        return tenantRepository.findById(1L)
-                .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
-    }
 }
