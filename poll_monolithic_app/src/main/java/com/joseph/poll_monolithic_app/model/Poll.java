@@ -3,9 +3,7 @@ package com.joseph.poll_monolithic_app.model;
 import com.joseph.poll_monolithic_app.model.enums.PollStatus;
 import com.joseph.poll_monolithic_app.model.enums.Visibility;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,6 +14,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Poll {
     @Id
@@ -44,7 +44,7 @@ public class Poll {
     @Column(nullable = false)
     private PollStatus pollStatus = PollStatus.DRAFT;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) // many polls to one user
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "creator_user_id", nullable = false)
     private User creator;
 

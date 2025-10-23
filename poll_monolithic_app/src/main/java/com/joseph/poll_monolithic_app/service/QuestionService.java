@@ -62,17 +62,20 @@ public class QuestionService {
         questionDto.setQuestionText(question.getQuestionText());
         questionDto.setType(question.getType());
 
-        List<QuestionOptionResDto> optionDtos = question.getOptions()
-                .stream()
-                .map(option -> {
-                    QuestionOptionResDto optionDto = new QuestionOptionResDto();
-                    optionDto.setId(option.getId());
-                    optionDto.setOptionText(option.getOptionText());
-                    return optionDto;
-                })
-                .toList();
-
-        questionDto.setOptions(optionDtos);
+        if (question.getOptions() != null) {
+            List<QuestionOptionResDto> optionDtos = question.getOptions()
+                    .stream()
+                    .map(option -> {
+                        QuestionOptionResDto optionDto = new QuestionOptionResDto();
+                        optionDto.setId(option.getId());
+                        optionDto.setOptionText(option.getOptionText());
+                        return optionDto;
+                    })
+                    .toList();
+            questionDto.setOptions(optionDtos);
+        } else {
+            questionDto.setOptions(List.of());
+        }
 
         return questionDto;
 
