@@ -2,6 +2,7 @@ package com.joseph.poll_monolithic_app.service;
 
 import com.joseph.poll_monolithic_app.dto.QuestionOptionReqDto;
 import com.joseph.poll_monolithic_app.dto.QuestionOptionResDto;
+import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.Poll;
 import com.joseph.poll_monolithic_app.model.Question;
 import com.joseph.poll_monolithic_app.model.QuestionOption;
@@ -65,5 +66,16 @@ class QuestionOptionServiceTest {
         assertEquals(questionOption.getId(), result.getId());
         assertEquals(questionOption.getOptionText(), result.getOptionText());
         verify(questionRepository).findById(question.getId());
+    }
+
+    @Test
+    void addOption_ShouldThrowResourceNotFoundException_WhenQuestionIsMissing() {
+        QuestionOptionReqDto optionReqDto = new QuestionOptionReqDto();
+        optionReqDto.setOptionText("Blue");
+
+        when(questionRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> questionOptionService.addOption(1L, 1L, optionReqDto));
     }
 }

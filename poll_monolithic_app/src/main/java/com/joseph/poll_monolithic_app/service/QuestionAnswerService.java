@@ -6,7 +6,6 @@ import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.PollSubmission;
 import com.joseph.poll_monolithic_app.model.Question;
 import com.joseph.poll_monolithic_app.model.QuestionAnswer;
-import com.joseph.poll_monolithic_app.repository.PollRepository;
 import com.joseph.poll_monolithic_app.repository.PollSubmissionRepo;
 import com.joseph.poll_monolithic_app.repository.QuestionAnswerRepo;
 import com.joseph.poll_monolithic_app.repository.QuestionRepository;
