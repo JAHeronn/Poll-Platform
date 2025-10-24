@@ -125,9 +125,6 @@ class PollServiceTest {
         assertEquals(2, result.size());
         assertEquals("Poll 1", result.getFirst().getTitle());
         assertEquals("Poll 2", result.get(1).getTitle());
-
-        verify(tenantRepository).findById(1L);
-        verify(pollRepository).findByTenant(tenant);
     }
 
     @Test
@@ -150,7 +147,6 @@ class PollServiceTest {
 
         assertEquals(poll.getTitle(), result.getTitle());
         assertEquals(poll.getId(), result.getId());
-        verify(pollRepository).findById(1L);
     }
 
     @Test

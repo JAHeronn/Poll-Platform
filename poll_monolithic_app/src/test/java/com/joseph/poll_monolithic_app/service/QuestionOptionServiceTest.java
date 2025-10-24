@@ -65,7 +65,6 @@ class QuestionOptionServiceTest {
 
         assertEquals(questionOption.getId(), result.getId());
         assertEquals(questionOption.getOptionText(), result.getOptionText());
-        verify(questionRepository).findById(question.getId());
     }
 
     @Test

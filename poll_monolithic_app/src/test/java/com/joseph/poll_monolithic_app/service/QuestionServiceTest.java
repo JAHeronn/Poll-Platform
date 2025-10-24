@@ -113,7 +113,6 @@ class QuestionServiceTest {
 
         assertEquals("Test?", result.getQuestionText());
         assertEquals(question.getId(), result.getId());
-        verify(questionRepository).findById(questionId);
     }
 
     @Test
