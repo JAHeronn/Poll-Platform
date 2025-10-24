@@ -129,4 +129,35 @@ class PollServiceTest {
         verify(tenantRepository).findById(1L);
         verify(pollRepository).findByTenant(tenant);
     }
+
+    @Test
+    void getAllPolls_ShouldThrowResourceNotFoundException_WhenTenantIsMissing() {
+        when(tenantRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> pollService.getAllPolls());
+    }
+
+    @Test
+    void getPoll_shouldReturnPoll_WhenPollIsFound() {
+        Tenant tenant = Tenant.builder().id(1L).name("John's Space").build();
+        User user = createMockUser();
+        Poll poll = Poll.builder().id(1L).title("Poll").tenant(tenant).creator(user).build();
+
+        when(pollRepository.findById(1L)).thenReturn(Optional.of(poll));
+
+        PollResponseDto result = pollService.getPoll(1L);
+
+        assertEquals(poll.getTitle(), result.getTitle());
+        assertEquals(poll.getId(), result.getId());
+        verify(pollRepository).findById(1L);
+    }
+
+    @Test
+    void getPoll_ShouldThrowResourceNotFoundException_WhenPollIsMissing() {
+        when(pollRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> pollService.getPoll(1L));
+    }
 }
