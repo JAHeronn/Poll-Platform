@@ -124,4 +124,44 @@ class QuestionAnswerServiceTest {
         assertThrows(ResourceNotFoundException.class,
                 () -> questionAnswerService.addAnswer(1L, 1L, answerReqDto));
     }
+
+    @Test
+    void addAnswer_ShouldThrowBadRequest_WhenPollOfPollSubmissionDoesNotMatch() {
+        QuestionAnswerReqDto answerReqDto = createQuestionAnswerReqDto();
+        PollSubmission pollSubmission = createPollSubmission();
+        Question question = Question.builder().id(1L)
+                .poll(pollSubmission.getPoll())
+                .questionText("What's your favourite colour?")
+                .type(QuestionType.TEXT)
+                .build();
+
+        when(pollSubmissionRepo.findById(1L)).thenReturn(Optional.of(pollSubmission));
+        when(questionRepository.findById(1L)).thenReturn(Optional.of(question));
+
+        assertThrows(BadRequestException.class,
+                () -> questionAnswerService.addAnswer(2L, 1L, answerReqDto));
+    }
+
+    @Test
+    void addAnswer_ShouldThrowBadRequest_WhenPollOfQuestionDoesNotMatch() {
+        QuestionAnswerReqDto answerReqDto = createQuestionAnswerReqDto();
+        Tenant tenant = Tenant.builder().id(1L).name("John's Space").build();
+        User creator = createMockUser("JTurner","John Turner", "john@example.com");
+
+        PollSubmission pollSubmission = createPollSubmission();
+
+        Poll pollTwo = Poll.builder().id(2L).title("Poll 2").tenant(tenant).creator(creator).build();
+
+        Question question = Question.builder().id(1L)
+                .poll(pollTwo)
+                .questionText("What's your favourite colour?")
+                .type(QuestionType.TEXT)
+                .build();
+
+        when(pollSubmissionRepo.findById(1L)).thenReturn(Optional.of(pollSubmission));
+        when(questionRepository.findById(1L)).thenReturn(Optional.of(question));
+
+        assertThrows(BadRequestException.class,
+                () -> questionAnswerService.addAnswer(1L, 1L, answerReqDto));
+    }
 }
