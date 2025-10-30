@@ -26,7 +26,7 @@ public class QuestionAnswerService {
     public QuestionAnswerResDto addAnswer(Long pollId, Long submissionId, QuestionAnswerReqDto answerDto) throws BadRequestException {
 
         PollSubmission submission = pollSubmissionRepo.findById(submissionId)
-                .orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Poll submission not found"));
 
         Question question = questionRepository.findById(answerDto.getQuestionId())
                 .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
