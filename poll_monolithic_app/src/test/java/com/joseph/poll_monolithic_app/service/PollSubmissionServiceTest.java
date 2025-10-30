@@ -1,8 +1,10 @@
 package com.joseph.poll_monolithic_app.service;
 
+import com.joseph.poll_monolithic_app.dto.PollRequestDto;
 import com.joseph.poll_monolithic_app.dto.PollSubmissionReqDto;
 import com.joseph.poll_monolithic_app.dto.PollSubmissionResDto;
 import com.joseph.poll_monolithic_app.dto.QuestionAnswerReqDto;
+import com.joseph.poll_monolithic_app.exception.ResourceNotFoundException;
 import com.joseph.poll_monolithic_app.model.*;
 import com.joseph.poll_monolithic_app.model.enums.QuestionType;
 import com.joseph.poll_monolithic_app.repository.PollRepository;
@@ -45,6 +47,14 @@ class PollSubmissionServiceTest {
                 .build();
     }
 
+    private Question createQuestion(Poll poll) {
+        return Question.builder().id(1L)
+                .poll(poll)
+                .questionText("What's your favourite colour?")
+                .type(QuestionType.TEXT)
+                .build();
+    }
+
     @Test
     void submitPoll_ShouldSavePoll_WhenPollIsFound() {
         Tenant tenant = Tenant.builder().id(1L).name("John's Space").build();
@@ -54,11 +64,7 @@ class PollSubmissionServiceTest {
         when(pollRepository.findById(poll.getId())).thenReturn(Optional.of(poll));
 
         User responder = createMockUser("SamT", "Sam Turner", "Sam@example.com");
-        Question question = Question.builder().id(1L)
-                .poll(poll)
-                .questionText("What's your favourite colour?")
-                .type(QuestionType.TEXT)
-                .build();
+        Question question = createQuestion(poll);
 
         when(questionRepository.findById(question.getId())).thenReturn(Optional.of(question));
 
@@ -96,5 +102,17 @@ class PollSubmissionServiceTest {
         assertEquals(savedSubmission.getPoll().getId(), result.getPollId());
         assertEquals(savedSubmission.getAnswers().getFirst().getAnswer(), result.getAnswers().getFirst().getAnswer());
         assertEquals(savedSubmission.getResponder().getFullName(), result.getResponderName());
+    }
+
+    @Test
+    void submitPoll_ShouldThrowResourceNotFound_WhenPollIsMissing() {
+        when(pollRepository.findById(1L)).thenReturn(Optional.empty());
+
+        User responder = createMockUser("SamT", "Sam Turner", "Sam@example.com");
+
+        PollSubmissionReqDto pollSubmissionReqDto = new PollSubmissionReqDto();
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> pollSubmissionService.submitPoll(pollSubmissionReqDto, 1L, responder));
     }
 }
