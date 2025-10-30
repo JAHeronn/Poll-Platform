@@ -2,14 +2,14 @@ package com.joseph.poll_monolithic_app.model;
 
 import com.joseph.poll_monolithic_app.model.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 // used to add Role to the metadata of the user-tenant join
 public class UserTenant {
     @Id
