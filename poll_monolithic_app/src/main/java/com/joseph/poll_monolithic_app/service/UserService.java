@@ -5,6 +5,7 @@ import com.joseph.poll_monolithic_app.dto.UserResponseDto;
 import com.joseph.poll_monolithic_app.model.User;
 import com.joseph.poll_monolithic_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,12 +13,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User createUser(UserRequestDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUserName());
         user.setFullName(userDto.getFullName());
         user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         return userRepository.save(user);
     }

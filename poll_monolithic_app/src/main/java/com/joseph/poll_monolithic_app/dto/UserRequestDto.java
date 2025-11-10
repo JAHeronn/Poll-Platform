@@ -18,4 +18,7 @@ public class UserRequestDto {
 
     @NotBlank(message = "A full name is required")
     private String fullName;
+
+    @NotBlank(message = "password must be at least ")
+    private String password;
 }
