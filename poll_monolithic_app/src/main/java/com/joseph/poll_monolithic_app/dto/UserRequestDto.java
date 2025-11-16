@@ -1,6 +1,7 @@
 package com.joseph.poll_monolithic_app.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,6 @@ public class UserRequestDto {
     @NotBlank(message = "A full name is required")
     private String fullName;
 
-    @NotBlank(message = "password must be at least ")
+    @Size(min = 8, message = "password must be at least ")
     private String password;
 }
