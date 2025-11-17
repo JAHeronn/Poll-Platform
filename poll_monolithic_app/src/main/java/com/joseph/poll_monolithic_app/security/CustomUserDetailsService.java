@@ -1,4 +1,4 @@
-package com.joseph.poll_monolithic_app.service;
+package com.joseph.poll_monolithic_app.security;
 
 import com.joseph.poll_monolithic_app.model.User;
 import com.joseph.poll_monolithic_app.repository.UserRepository;
